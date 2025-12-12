@@ -17,7 +17,7 @@ export const createSession = async (req, res) => {
 
 export const getSession = async (req, res) => {
   try {
-    const session = await db.select().from(sessions).where(eq(sessions.id, req.params.id));
+    const session = await db.select().from(sessions).where(eq(sessions.state, req.params.state));
     res.status(200).json(session);
   } catch (error) {
     res.status(500).json({ error: error.message });
