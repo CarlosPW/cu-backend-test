@@ -4,6 +4,7 @@ import { eq } from "drizzle-orm";
 // Controladores para las sesiones
 
 export const createSession = async (req, res) => {
+  console.log('createSession', req.body);
   try {
     await db.insert(sessions).values({
       code: req.body.code,
