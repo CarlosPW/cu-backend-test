@@ -31,7 +31,6 @@ export const token = async (req, res) => {
       redirect_uri: redirectFromBody,
       client_id: clientIdFromBody,
       client_secret: clientSecretFromBody,
-      code_verifier: codeVerifier,
       grant_type: grantTypeFromBody,
       state: stateFromBody,
     } = req.body;
@@ -39,13 +38,9 @@ export const token = async (req, res) => {
     if (!code) {
       return res.status(400).json({ error: "Falta parámetro code" });
     }
-    if (!codeVerifier) {
-      return res.status(400).json({ error: "Falta parámetro code_verifier" });
-    }
 
     const tokenData = await exchangeCodeForToken(
       code,
-      codeVerifier,
       redirectFromBody,
       clientIdFromBody,
       clientSecretFromBody,

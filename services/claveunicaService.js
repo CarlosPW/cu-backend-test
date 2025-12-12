@@ -29,7 +29,6 @@ export const generateAuthorizationUrl = (state = "kueriTest") => {
  */
 export const exchangeCodeForToken = async (
   code,
-  codeVerifier,
   redirectUri = null,
   clientId = null,
   clientSecret = null,
@@ -38,6 +37,13 @@ export const exchangeCodeForToken = async (
 ) => {
   const redirect_uri = redirectUri || CLAVE_UNICA_CONFIG.REDIRECT_URI;
   const client_id = clientId || CLAVE_UNICA_CONFIG.CLIENT_ID;
+
+  console.log("[exchangeCodeForToken] code:", code);
+  console.log("[exchangeCodeForToken] redirectUri:", redirectUri);
+  console.log("[exchangeCodeForToken] clientId:", clientId);
+  console.log("[exchangeCodeForToken] clientSecret:", clientSecret);
+  console.log("[exchangeCodeForToken] grantType:", grantType);
+  console.log("[exchangeCodeForToken] state:", state);
 
   const response = await axios.post(
     CLAVE_UNICA_CONFIG.ENDPOINTS.TOKEN,
@@ -50,8 +56,9 @@ export const exchangeCodeForToken = async (
       client_secret: clientSecret,
       code_verifier: codeVerifier,
     }).toString(),
-    { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+    { headers: { "Content-Type": "application/x-www-form-urlencoded" } },
   );
+  console.log("response", response.data);
 
   return response.data;
 };
