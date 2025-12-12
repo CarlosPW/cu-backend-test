@@ -4,11 +4,15 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+// Determinar si necesita SSL (Railway requiere SSL para conexiones externas)
+const needsSSL = () => {
+  const dbUrl = process.env.DATABASE_URL || "";
+  return dbUrl.includes("railway") || dbUrl.includes("up.railway.app");
+};
+
 const pool = new Pool({
-  connection: { 
-    connectionString: process.env.DATABASE_URL,
-    ssl: true
-  }
+  connectionString: process.env.DATABASE_URL,
+  ssl: needsSSL() ? { rejectUnauthorized: false } : false
 });
 
 export const db = drizzle(pool);

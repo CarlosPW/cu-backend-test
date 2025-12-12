@@ -6,14 +6,19 @@ import { eq } from "drizzle-orm";
 export const createSession = async (req, res) => {
   console.log('createSession', req.body);
   try {
-    await db.insert(sessions).values({
+    const result = await db.insert(sessions).values({
       code: req.body.code,
       state: req.body.state,
-    });
-    res.status(200).json({ message: "Session created successfully" });
+    }).returning();
+    console.log('session created:', result);
+    res.status(200).json({ message: "Session created successfully", data: result });
   } catch (error) {
-    console.log('error', JSON.stringify(error, null, 2));
-    res.status(500).json({ error: error.message });
+    console.error('Full error:', error);
+    res.status(500).json({ 
+      error: error.message,
+      code: error.code,
+      detail: error.detail 
+    });
   }
 };
 
