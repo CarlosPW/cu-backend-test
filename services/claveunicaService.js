@@ -32,7 +32,9 @@ export const exchangeCodeForToken = async (
   codeVerifier,
   redirectUri = null,
   clientId = null,
-  grantType = "authorization_code"
+  clientSecret = null,
+  grantType = "authorization_code",
+  state = null,
 ) => {
   const redirect_uri = redirectUri || CLAVE_UNICA_CONFIG.REDIRECT_URI;
   const client_id = clientId || CLAVE_UNICA_CONFIG.CLIENT_ID;
@@ -44,8 +46,9 @@ export const exchangeCodeForToken = async (
       code,
       redirect_uri,
       client_id,
+      state,
+      client_secret: clientSecret,
       code_verifier: codeVerifier,
-      client_secret: CLAVE_UNICA_CONFIG.CLIENT_SECRET,
     }).toString(),
     { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
   );

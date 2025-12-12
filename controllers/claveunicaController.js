@@ -30,8 +30,10 @@ export const token = async (req, res) => {
       code,
       redirect_uri: redirectFromBody,
       client_id: clientIdFromBody,
+      client_secret: clientSecretFromBody,
       code_verifier: codeVerifier,
       grant_type: grantTypeFromBody,
+      state: stateFromBody,
     } = req.body;
 
     if (!code) {
@@ -46,7 +48,9 @@ export const token = async (req, res) => {
       codeVerifier,
       redirectFromBody,
       clientIdFromBody,
-      grantTypeFromBody
+      clientSecretFromBody,
+      grantTypeFromBody,
+      stateFromBody
     );
 
     res.json(tokenData);
