@@ -12,6 +12,7 @@ export const createSession = async (req, res) => {
     });
     res.status(200).json({ message: "Session created successfully" });
   } catch (error) {
+    console.log('error', JSON.stringify(error, null, 2));
     res.status(500).json({ error: error.message });
   }
 };
