@@ -54,7 +54,6 @@ export const exchangeCodeForToken = async (
       client_id,
       state,
       client_secret: clientSecret,
-      code_verifier: codeVerifier,
     }).toString(),
     { headers: { "Content-Type": "application/x-www-form-urlencoded" } },
   );
